@@ -1,0 +1,10 @@
+Alex Student | goal target | paper mode | 25.0 years left | as of 2026-10-21
+value $100,000   contributed $100,000   gain $0
+sleeve   ticker        value  weight  target
+US_EQ    VTI         $50,000   50.0%   50.0%
+INTL_EQ  VXUS        $40,000   40.0%   40.0%
+BONDS    BND              $0    0.0%    0.0%
+GOLD     GLDM         $4,000    4.0%    4.0%
+CASH     SGOV         $6,000    6.0%    6.0%
+projection at horizon: median $2,142,772, 10th pct $1,122,512, P(reach $1,000,000 in today's dollars (= $1,853,944 nominal)) = 60.8%
+last proposal: 2026-10 (approved)

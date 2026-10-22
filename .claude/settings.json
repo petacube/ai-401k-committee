@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./ai401k.sh doctor:*)",
+      "Bash(./ai401k.sh data:*)",
+      "Bash(./ai401k.sh status:*)",
+      "Bash(./ai401k.sh plan:*)",
+      "Bash(./ai401k.sh project:*)",
+      "Bash(./ai401k.sh signals:*)",
+      "Bash(./ai401k.sh propose:*)",
+      "Bash(./ai401k.sh override:*)",
+      "Bash(./ai401k.sh validate:*)",
+      "Bash(./ai401k.sh backtest:*)",
+      "Bash(./ai401k.sh report:*)",
+      "Bash(./ai401k.sh --help)",
+      "Read(./**)",
+      "Edit(./journal/**)",
+      "WebSearch",
+      "WebFetch"
+    ],
+    "ask": [
+      "Bash(./ai401k.sh approve:*)",
+      "Bash(./ai401k.sh sync:*)",
+      "Bash(./ai401k.sh init:*)",
+      "Edit(./config/cma.yaml)",
+      "Edit(./config/universe.yaml)",
+      "Edit(./config/profiles.yaml)"
+    ],
+    "deny": [
+      "Edit(./config/guardrails.yaml)",
+      "Edit(./portfolio/**)",
+      "Edit(./ai401k/**)",
+      "Bash(rm:*)",
+      "Bash(sed -i:*)"
+    ]
+  }
+}

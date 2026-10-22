@@ -1,0 +1,12 @@
+name: Alex Student
+initial_balance: 100000.0
+annual_contribution: 20000.0
+contribution_growth: 0.03
+horizon_years: 25.0
+goal: target
+target_amount: 1000000.0
+target_real: true
+confidence: 0.7
+selection: max_p10
+mode: paper
+start_date: '2026-10-21'

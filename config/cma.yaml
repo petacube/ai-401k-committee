@@ -1,0 +1,33 @@
+# Capital market assumptions (CMA): what we expect each sleeve to earn over the next 10+ years.
+# These drive the strategic allocation and the Monte Carlo projections, NOT the monthly signals.
+#
+# return = expected annual compound (geometric) return, nominal, before fund fees
+# vol    = expected annual volatility
+# Correlations are estimated from monthly history (config: corr_lookback_years); the matrix
+# below is only the fallback when no price data is available.
+#
+# Review once a year (/annual-review). Good public sources: Vanguard "Economic and market
+# outlook", J.P. Morgan "Long-Term Capital Market Assumptions", Research Affiliates "Asset
+# Allocation Interactive", BlackRock "Capital market assumptions". The AI may change a return by
+# at most 1.0 percentage point per year and must log the reason in the annual review memo.
+as_of: 2026-10-01
+inflation: 0.025
+sleeves:
+  US_EQ:   {return: 0.060, vol: 0.165}   # high starting valuations (CAPE) pull this below the long-run ~10%
+  INTL_EQ: {return: 0.070, vol: 0.175}   # cheaper valuations, higher dividend yield
+  BONDS:   {return: 0.045, vol: 0.060}   # roughly today's yield-to-maturity of the aggregate index
+  GOLD:    {return: 0.040, vol: 0.150}   # ~inflation + a little; a diversifier, not a return engine
+  CASH:    {return: 0.033, vol: 0.006}   # T-bill rate expected over the cycle
+corr_lookback_years: 15
+fallback_corr:
+  #        US_EQ INTL_EQ BONDS GOLD  CASH
+  US_EQ:   [1.00, 0.85, 0.15, 0.05, 0.00]
+  INTL_EQ: [0.85, 1.00, 0.20, 0.20, 0.00]
+  BONDS:   [0.15, 0.20, 1.00, 0.30, 0.10]
+  GOLD:    [0.05, 0.20, 0.30, 1.00, 0.05]
+  CASH:    [0.00, 0.00, 0.10, 0.05, 1.00]
+# Monte Carlo settings
+simulation:
+  paths: 5000
+  student_t_df: 5        # fat tails: monthly shocks drawn from a Student-t, not a normal
+  seed: 401

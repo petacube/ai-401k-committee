@@ -1,0 +1,24 @@
+# HARD LIMITS. The engine projects every proposal onto these limits and `ai401k validate`
+# rejects anything that breaks them. Claude Code is NOT allowed to edit this file
+# (see .claude/settings.json); only the human owner changes it, deliberately, outside a
+# rebalancing session, and records why in journal/.
+weights:                     # [min, max] for every final target weight
+  US_EQ:   [0.00, 0.70]
+  INTL_EQ: [0.00, 0.40]
+  BONDS:   [0.00, 0.80]
+  GOLD:    [0.00, 0.15]
+  CASH:    [0.02, 0.60]
+total_equity: [0.10, 0.90]
+intl_share_of_equity: [0.20, 0.45]   # used by the strategic optimiser (home bias limit both ways)
+equity_by_years_left:                # de-risking as the goal date approaches
+  - {years_left_below: 3, max_equity: 0.45}
+  - {years_left_below: 7, max_equity: 0.70}
+max_tilt_from_saa: 0.15              # |final - strategic| per sleeve (tactical signals + AI override)
+ai_override:
+  max_per_sleeve: 0.05               # Claude may move one sleeve by at most 5 points
+  max_total: 0.10                    # sum of |changes| across sleeves (so at most 5 in, 5 out)
+  reason_min_chars: 80               # every override needs a written, sourced reason
+rebalance:
+  drift_band_abs: 0.03               # trade only if some sleeve is >3 points off target
+  min_trade_usd: 100                 # ignore dust trades
+  max_turnover: 0.40                 # at most 40% of the portfolio changes hands in one month

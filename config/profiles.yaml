@@ -1,0 +1,42 @@
+# Investment goals -> strategic asset allocation (SAA) + tactical rules.
+# SAA weights are for a long horizon (10+ years to go). Inside the last `glide.start_years`
+# the weights slide linearly toward `glide.toward` (the classic target-date glide path).
+# The `target` goal has no fixed SAA: the optimiser picks the LEAST risky efficient portfolio
+# that reaches the dollar target with the requested confidence (see STRATEGY.md section 3).
+glide:
+  start_years: 10
+  toward: conservative
+
+profiles:
+  conservative:
+    description: Capital preservation first. Bond-heavy, trend filter cuts losing risk assets in half.
+    saa: {US_EQ: 0.22, INTL_EQ: 0.10, BONDS: 0.50, GOLD: 0.08, CASH: 0.10}
+    tactical: {mode: trend, trend_cut: 0.50}
+  balanced:
+    description: Classic 60/40-style growth with diversifiers and a trend filter.
+    saa: {US_EQ: 0.38, INTL_EQ: 0.20, BONDS: 0.32, GOLD: 0.06, CASH: 0.04}
+    tactical: {mode: trend, trend_cut: 0.50}
+  aggressive:
+    description: Equity-heavy growth; light trend filter to soften deep bear markets.
+    saa: {US_EQ: 0.55, INTL_EQ: 0.28, BONDS: 0.10, GOLD: 0.05, CASH: 0.02}
+    tactical: {mode: trend, trend_cut: 0.30}
+  max_wealth:
+    description: Maximise expected ending market value. Stays fully invested (time in the market beats timing it); rebalancing only.
+    saa: {US_EQ: 0.58, INTL_EQ: 0.32, BONDS: 0.03, GOLD: 0.05, CASH: 0.02}
+    tactical: {mode: none}
+  momentum:
+    description: Dual momentum (relative + absolute) across US, international, bonds and gold; cash when nothing beats T-bills.
+    saa: {US_EQ: 0.38, INTL_EQ: 0.20, BONDS: 0.32, GOLD: 0.06, CASH: 0.04}   # anchor only, for reporting
+    tactical:
+      mode: dual_momentum
+      lookbacks_months: [3, 6, 12]
+      rank_weights: [0.40, 0.30, 0.15, 0.05]   # best .. worst of the four risky sleeves; remaining 10% cash
+    guardrail_overrides:
+      weights: {US_EQ: [0, 0.70], INTL_EQ: [0, 0.40], BONDS: [0, 0.80], GOLD: [0, 0.40], CASH: [0.02, 1.0]}
+      total_equity: [0.0, 0.90]
+      max_tilt_from_saa: 1.0
+      rebalance: {drift_band_abs: 0.03, min_trade_usd: 100, max_turnover: 1.0}
+  target:
+    description: Reach a dollar goal with the least risk needed (goal-based investing). Re-solved every year, so the plan de-risks automatically once you are ahead.
+    saa: solve
+    tactical: {mode: trend, trend_cut: 0.50}

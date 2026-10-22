@@ -1,0 +1,45 @@
+# The five sleeves of the portfolio and the instrument used for each.
+#
+#   ticker   what you actually buy. Any Yahoo Finance symbol works, so if your 401k plan offers
+#            mutual funds instead of ETFs, put the plan fund's symbol here (e.g. FXAIX for a
+#            Fidelity S&P 500 index fund) and set plan_fund to its name on your plan website.
+#   history  symbols spliced together (first = preferred) to build a long return history for
+#            signals and back-tests. "yield:^IRX" means: turn the 13-week T-bill yield into a
+#            monthly cash return.
+#   expense_ratio  annual fund fee, charged monthly in back-tests and projections.
+sleeves:
+  US_EQ:
+    name: US stocks (total market)
+    ticker: VTI
+    plan_fund: Vanguard Total Stock Market ETF
+    history: [VTI, SPY]
+    expense_ratio: 0.0003
+    equity: true
+  INTL_EQ:
+    name: International stocks (developed + emerging)
+    ticker: VXUS
+    plan_fund: Vanguard Total International Stock ETF
+    history: [VXUS, EFA]
+    expense_ratio: 0.0005
+    equity: true
+  BONDS:
+    name: US investment-grade bonds
+    ticker: BND
+    plan_fund: Vanguard Total Bond Market ETF
+    history: [BND, AGG]
+    expense_ratio: 0.0003
+    equity: false
+  GOLD:
+    name: Gold
+    ticker: GLDM
+    plan_fund: SPDR Gold MiniShares
+    history: [GLDM, GLD]
+    expense_ratio: 0.0010
+    equity: false
+  CASH:
+    name: Cash (0-3 month T-bills)
+    ticker: SGOV
+    plan_fund: iShares 0-3 Month Treasury Bond ETF
+    history: [SGOV, BIL, "yield:^IRX"]
+    expense_ratio: 0.0009
+    equity: false
